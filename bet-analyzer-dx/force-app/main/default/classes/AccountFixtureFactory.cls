@@ -1,9 +1,22 @@
+/**
+ * @author: ercarval - topi
+ */
 @isTest
 public class AccountFixtureFactory {
 
+    public static Account newWithFakeId (String name) {
+
+        Account account = newAccount (name);
+        IdGenerator.generate(account);
+                
+        return account;
+
+    }
+
     public static Account newAccount(String name) {
         return new Account(
-                   Name = name);
+                   Name = name
+                   , BillingState = Random.generateText(2));
     }
 
     public static Account createAccount(String name) {
@@ -15,6 +28,14 @@ public class AccountFixtureFactory {
         insert account;
         return account;
 
+    }
+
+    public static Account fromJson (String payload) {
+        return (Account) JSON.deserialize(payload, Account.class);
+    }
+
+    public static List<Account> fromJsonArray (String payload) {
+        return (List<Account>) JSON.deserialize(payload, List<Account>.class);
     }
 
 }
